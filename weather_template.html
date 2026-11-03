@@ -43,6 +43,8 @@
             document.querySelectorAll(".site-view").forEach((view, index) => {
                 view.classList.toggle("active", index === activeSite);
             });
+            const extendedControl = document.getElementById("extended-view-" + activeSite);
+            extendedView = extendedControl ? extendedControl.checked : false;
             triggerDayUpdate(activeSite);
             Plotly.Plots.resize(document.getElementById("table-heatmap-" + activeSite));
             Plotly.Plots.resize(document.getElementById("my-sel-" + activeSite));
@@ -62,7 +64,8 @@
             if (selectedKey !== null) selectedDay = selectedKey;
             for (let index = 0; index < @@SITE_COUNT@@; index++) {
                 document.getElementById("day-" + index).value = selectedDay;
-                document.getElementById("extended-view-" + index).checked = extendedView;
+                const extendedControl = document.getElementById("extended-view-" + index);
+                if (extendedControl) extendedControl.checked = extendedView;
             }
             const graphDiv = document.getElementById("my-sel-" + siteIndex);
             const dayIndex = Number(selectedDay.slice(5));

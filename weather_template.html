@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html><head><style>
+    body { font-family:sans-serif; background-color:white }
+    h4 { display:flex; align-items:baseline; justify-content:flex-start; gap:8px; }
+    .day-dropdown-box {
+        margin: 4px 0 0;
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+    select { padding: 12px; min-height: 48px; font-size: 16px; }
+    .extended-label {
+        min-height: 48px;
+        padding: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0 px;
+        font-size: 14px;
+    }
+    .extended-label input { width: 24px; height: 24px; }
+    .generated-at {
+        display: block;
+        text-align: center;
+    }
+    .site-view { display: none; }
+    .site-view.active { display: block; }
+</style></head>
+<body>
+    <h4>@@PAGE_TITLE@@ Outlook for Watersports</h4>
+    @@SITE_VIEWS@@
+    <script>
+        const dayLabels = @@DAY_LABELS@@;
+        const dayTitles = @@DAY_TITLES@@;
+        let activeSite = 0;
+        let selectedDay = "view_0";
+        let extendedView = false;
+        function triggerSiteUpdate(siteIndex) {
+            activeSite = Number(siteIndex);
+            document.querySelectorAll(".site-view").forEach((view, index) => {
+                view.classList.toggle("active", index === activeSite);
+            });
+            triggerDayUpdate(activeSite);
+            Plotly.Plots.resize(document.getElementById("table-heatmap-" + activeSite));
+            Plotly.Plots.resize(document.getElementById("my-sel-" + activeSite));
+        }
+        function triggerExtendedUpdate(siteIndex, checked) {
+            extendedView = checked;
+            triggerDayUpdate(siteIndex);
+        }
+        function makeVisibilityMask(graphDiv, dayIndex, extended) {
+            const mode = extended ? "extended_visible" : "standard_visible";
+            return graphDiv.data.map(trace => {
+                const meta = trace.meta || {};
+                return meta.day_index === dayIndex && Boolean(meta[mode]);
+            });
+        }
+        function triggerDayUpdate(siteIndex, selectedKey = null) {
+            if (selectedKey !== null) selectedDay = selectedKey;
+            for (let index = 0; index < @@SITE_COUNT@@; index++) {
+                document.getElementById("day-" + index).value = selectedDay;
+                document.getElementById("extended-view-" + index).checked = extendedView;
+            }
+            const graphDiv = document.getElementById("my-sel-" + siteIndex);
+            const dayIndex = Number(selectedDay.slice(5));
+            const visibility = makeVisibilityMask(graphDiv, dayIndex, extendedView);
+            Plotly.update(
+                graphDiv,
+                {visible: visibility},
+                {title: extendedView ? dayTitles[selectedDay] + " — Extended" : dayTitles[selectedDay]}
+            );
+        }
+        for (let index = 0; index < @@SITE_COUNT@@; index++) {
+            document.getElementById("table-heatmap-" + index).on("plotly_click", (eventData) => {
+                const point = eventData.points[0];
+                if (point.data.type !== "heatmap") return;
+                const selectedKey = Object.keys(dayLabels).find(key => dayLabels[key] === point.y);
+                if (selectedKey) {
+                    @@SITE_SELECT_JS@@
+                    document.getElementById("day-" + index).value = selectedKey;
+                    triggerMobileUpdate(index);
+                }
+            });
+        }
+        triggerDayUpdate(0);
+    </script>
+</body>
+</html>

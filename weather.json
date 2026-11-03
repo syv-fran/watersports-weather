@@ -17,13 +17,6 @@
             }
         }
     },
-    "default": {
-        "name": "Imaginary Spot",
-        "location": [
-            37,
-            -8
-        ]
-    },
     "kayaking": {
         "name": "South Bay Kayaking",
         "location": [
@@ -52,7 +45,7 @@
         },
         "icon": {
             "above": {
-                "Wind": 24.0,
+                "Wind": 15.0,
                 "Waves": 0.9,
                 "Rain": 0.0
             },
@@ -62,11 +55,18 @@
         },
         "timezone": "Europe/Madrid"
     },
-    "InlandSUP": {
-        "name": "Lake SUP",
+    "Imaginary": {
+        "name": "Imaginary Sea Spot",
         "location": [
-            51.550,
-            -8.95
+            37,
+            -8
+        ]
+    },
+    "InlandSUP": {
+        "name": "Inland Lake SUP",
+        "location": [
+            51.95,
+            -0.95
         ],
         "sheltered_distance": 0.5,
         "sheltered_angles": [
@@ -115,7 +115,8 @@
                 "Waves": 2
             },
             "below": {
-                "Wind": 10.0
+                "Wind": 10.0,
+                "Tide":-2.0
             }
         },
         "icon": {
@@ -123,6 +124,10 @@
                 "Wind": 30.0,
                 "Waves": 1.0,
                 "Rain": 3.0
+            },
+            "below": {
+                "Wind": 10.0,
+                "Tide": -2.5
             }
         }
     }

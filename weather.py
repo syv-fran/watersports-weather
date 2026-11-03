@@ -108,7 +108,6 @@ measures = {
         "type": "scatter",
         "name": "Rain (mm)",
         "row": 2,
-        "view": "standard",
         "source": "forecast",
     },
     "temperature_2m": {
@@ -443,7 +442,20 @@ def parse_cli_args(argv: list[str] | None = None) -> argparse.Namespace:
     args = parser.parse_args(argv)
     return args
 
-
+def to_emojis (cell:str) -> str: # Reasonably space for two symbols per cell.
+        if cell=='':
+            return ''
+        x=cell.split(',')
+        match len(x):              
+            case 2:
+                emojis=constraints[x[0]].symbol+constraints[x[1]].symbol
+            case 1:
+                emojis=constraints[x[0]].symbol
+            case _:
+                emojis=constraints[x[0]].symbol+"+"
+        return emojis
+v_to_emojis = np.vectorize(to_emojis)
+ 
 def construct_plot_tables(
     df: pl.DataFrame,
     daily_dl: pl.DataFrame,
@@ -482,8 +494,11 @@ def construct_plot_tables(
     hours = [col for col in z_matrix.columns if col != "day"]
 
     z_data = z_matrix.select(hours).to_numpy()
-    text_data = text_matrix.select(hours).to_numpy()
+    text_contents = text_matrix.select(hours).to_numpy()
 
+    emoji_contents = v_to_emojis (text_contents)
+
+ 
     table_heatmap = go.Heatmap(
         z=z_data,
         x=[f"{h}:00" for h in hours],
@@ -494,12 +509,12 @@ def construct_plot_tables(
         showscale=False,
         xgap=3,
         ygap=3,
-        text=text_data,
+        text=emoji_contents,
+        customdata=text_contents,
         texttemplate="%{text}",
         textfont={"size": 18, "color": "black"},
-        hoverinfo="text",
         name=site_name + " Outlook",
-        hovertext=[[f"Day: {d}<br>Hour: {h}:00" for h in hours] for d in days],
+        hovertemplate="%{customdata}<extra></extra>",
     )
 
     tab_multiplier = 0.80
@@ -839,9 +854,8 @@ def build_wave_expr(angle_h, angle_l, marine_avail: bool = True):
 def build_constraints_exprs(site, constraints):
     # Build polars expressions for bounds and config specified in 'site' for traffic light colour and symbol.
     # constraints have been pre-filtered so they do not refer to non-existent columns
-    expr = pl.when(pl.lit(False)).then(
-        2
-    )  # will never happen but makes 'otherwise' always work at end
+    expr = pl.when(pl.lit(False)).then(2)
+    # False expr will never happen but makes 'otherwise' always work at end
     for x, val in site.red.above.items():
         expr = expr.when(pl.col(constraints[x].column) > val).then(0)
     for x, val in site.red.below.items():
@@ -850,17 +864,26 @@ def build_constraints_exprs(site, constraints):
         expr = expr.when(pl.col(constraints[x].column) > val).then(1)
     for x, val in site.amber.below.items():
         expr = expr.when(pl.col(constraints[x].column) <= val).then(1)
-    i_expr = pl.when(pl.lit(False)).then(pl.lit(""))
+    icon_exprs = []
     for x, val in site.icon.above.items():
-        i_expr = i_expr.when(pl.col(constraints[x].column) > val).then(
-            pl.lit(constraints[x].symbol)
+        icon_exprs.append(
+            pl.when(pl.col(constraints[x].column) > val)
+            .then(pl.lit(x))
+            .otherwise(None)
         )
     for x, val in site.icon.below.items():
-        i_expr = i_expr.when(pl.col(constraints[x].column) <= val).then(
-            pl.lit(constraints[x].symbol)
+        icon_exprs.append(
+            pl.when(pl.col(constraints[x].column) <= val)
+            .then(pl.lit(x))
+            .otherwise(None)
         )
+    i_expr = (
+        pl.concat_str(icon_exprs, separator=",", ignore_nulls=True).fill_null("")
+        if icon_exprs
+        else pl.lit("")
+    )
 
-    return expr.otherwise(2), i_expr.otherwise(pl.lit(""))
+    return expr.otherwise(2), i_expr
 
 
 def process_dataframe(df, site,marine_avail:bool):
@@ -868,7 +891,7 @@ def process_dataframe(df, site,marine_avail:bool):
     # for each swell or wind wave in the allowed direction. If wind wave isn't in that direction,
     # the sum should use the calculated wind wave in a sheltered area based on fetch provided.
     # Then add traffic-light categories based on acceptable conditions
-    # and condition icons - emojis from symbol['Wind'] etc.
+    # and conditions to go in Icon field.
     # finally create a new 'daily' dataframe with per-day max,min,mean measures.
 
     # factor uses Carter formula assuming units in km and km/h .

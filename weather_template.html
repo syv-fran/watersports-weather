@@ -83,8 +83,7 @@
                 const selectedKey = Object.keys(dayLabels).find(key => dayLabels[key] === point.y);
                 if (selectedKey) {
                     @@SITE_SELECT_JS@@
-                    document.getElementById("day-" + index).value = selectedKey;
-                    triggerMobileUpdate(index);
+                    triggerDayUpdate(index, selectedKey);
                 }
             });
         }

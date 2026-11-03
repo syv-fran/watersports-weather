@@ -250,9 +250,7 @@ def arrow_plot(
         row=row,
         col=col,
     )
-    marker["standoff"] = (
-        6  # keep overall style of marker, change to non-centred triangle
-    )
+    marker["standoff"] = 6
     marker["symbol"] = "triangle-down"
     marker["size"] = 5
     fig.add_trace(
@@ -514,7 +512,7 @@ def construct_plot_tables(
         texttemplate="%{text}",
         textfont={"size": 18, "color": "black"},
         name=site_name + " Outlook",
-        hovertemplate="%{customdata}<extra></extra>",
+        hovertemplate="%{x} %{y} <br> %{customdata} <extra></extra>",
     )
 
     tab_multiplier = 0.80

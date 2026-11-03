@@ -13,7 +13,8 @@
         "icon": {
             "above": {
                 "Waves": 1.0,
-                "Rain": 0.0
+                "Rain": 0.0,
+                "Wind": 15
             }
         }
     },
@@ -33,7 +34,7 @@
                 "Rain": 0.0
             },
             "below": {
-                "Tide": -0.3
+                "Tide": -0.4
             }
         },
         "red": {
@@ -45,12 +46,12 @@
         },
         "icon": {
             "above": {
-                "Wind": 15.0,
+                "Wind": 25.0,
                 "Waves": 0.9,
                 "Rain": 0.0
             },
             "below": {
-                "Tide": -0.3
+                "Tide": -0.4
             }
         },
         "timezone": "Europe/Madrid"

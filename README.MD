@@ -1,13 +1,13 @@
-This Python script gives a colour-coded matrix of good and bad times to go out kayaking/SUPping/sailing in the next week or so. Hours are marked by too much/little wind, waves, tide etc.
+This Python script gives a colour-coded matrix of good and bad times next week to go out kayaking, stand up paddleboarding or sailing. Hours are colour-coded for too much or too little wind, waves, tide and rain. [Live Demo Here](https://syv-fran.github.io/watersports-weather/): current weather, fixed locations and rules.
 
 ### FEATURES
-- Interactive HTML - run the script to get an up-to-date forecast when you can, and then interact with the graphs offline when you are out on the water.
-- Unlimited locations, adjustable limits of what conditions are RED, AMBER or GREEN for you.
+- Interactive HTML. Run the script to get an up-to-date forecast when you can, and then interact with the graphs offline when you are out on the water.
+- Unlimited locations, with adjustable limits of what conditions are RED, AMBER or GREEN for you.
 - Uses marine forecast, but locations can be configured to be sheltered from some directions, giving more realistic wave heights for coasts and bays.
 - Big buttons for wet gloved hands on phones.
 - Visually represents daylight hours in your timezone(s).
-- Temperature display based on UK Met Office colour categories for at-a-glance overview.
-- Apply the same rules to all locations, or set up your SUP spot to prefer less wind than your sailing trip.
+- Temperature display at a glance based on UK Met Office colour categories.
+- Apply the same rules to all locations, or let your SUP spots prefer less wind than your sailing venues.
 - Inland lakes? Define them as sheltered from all directions and set max distance from land to calculate waves.
 
 ### QUICKSTART

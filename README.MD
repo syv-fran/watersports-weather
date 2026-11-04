@@ -1,8 +1,8 @@
-This Python script gives a colour-coded matrix of good and bad times next week to go out kayaking, stand up paddleboarding or sailing. Hours are colour-coded for too much or too little wind, waves, tide and rain. [Live Demo Here](https://syv-fran.github.io/watersports-weather/): current weather, fixed locations and rules.
+<html> <img width="100" height="132/" alt="Screenshot" align="left" src="https://github.com/user-attachments/assets/54a4f9c1-e7f4-491e-8baa-6fe10f240887" />This Python script gives a colour-coded matrix of good and bad times next week to go out kayaking, stand up paddleboarding or sailing. Hours are colour-coded for too much or too little wind, waves, tide and rain. </html>
 
-### FEATURES
-![Screenshot](https://imgur.com/a/5yZLiAD)
-- Interactive HTML. Run the script to get an up-to-date forecast when you can, and then interact with the graphs offline when you are out on the water.
+## [Live Demo Here](https://syv-fran.github.io/watersports-weather/): current weather, fixed locations and rules.
+### Features
+- Interactive, responsive HTML. Run the script to get an up-to-date forecast when you can, and then interact with the graphs offline when you are out on the water.
 - Unlimited locations, with adjustable limits of what conditions are RED, AMBER or GREEN for you.
 - Uses marine forecast, but locations can be configured to be sheltered from some directions, giving more realistic wave heights for coasts and bays.
 - Big buttons for wet gloved hands on phones.
@@ -11,7 +11,7 @@ This Python script gives a colour-coded matrix of good and bad times next week t
 - Apply the same rules to all locations, or let your SUP spots prefer less wind than your sailing venues.
 - Inland lakes? Define them as sheltered from all directions and set max distance from land to calculate waves.
 
-### QUICKSTART
+### Quickstart
 Once you have downloaded the repository and ensured Python is installed:
 
     cd watersports-weather
@@ -21,7 +21,16 @@ View `forecast.html` in your browser.
 By default it reads locations (specified as latitude and longitude) and rules from 
 `weather.json`. Customise this after examining the examples and re-run `weather.py`.
 
-### COMMAND LINE USAGE
+### Usage Suggestions
+
+Can be integrated with a personal webserver, dashboard system or auto-scheduled emails for seafarers with intermittent connections. If using emails, send as an attachment to ensure Javascript works correctly.
+
+### Caution
+
+No warranty. You are responsible for your decisions based on this forecast, which may be wrong.
+Good maritime practice requires gathering information from multiple sources and assessing its credibility.
+
+### Command Line Details
 
     usage: weather.py [-h] [--config CONFIG] [--site SITE] [-o OUTPUT] [n_days] [date_start]
 
@@ -36,13 +45,3 @@ By default it reads locations (specified as latitude and longitude) and rules fr
     --config CONFIG      Use this JSON config file
     --site SITE          Use this location from config file
     -o, --output OUTPUT  Write generated HTML to this file instead of standard output
-
-### REGULAR USAGE
-
-Can be integrated with a personal webserver, dashboard system or auto-scheduled emails for seafarers with intermittent connections. If using emails, send as an attachment to ensure Javascript works correctly.
-
-### CAUTION
-
-No warranty. You are responsible for your decisions based on this forecast, which may be wrong.
-Good maritime practice requires gathering information from multiple sources and assessing its credibility.
-<img width="300" height="362" alt="Image" src="https://github.com/user-attachments/assets/54a4f9c1-e7f4-491e-8baa-6fe10f240887" />

@@ -1,6 +1,7 @@
-<html> <img width="100" height="132/" alt="Screenshot" align="left" src="https://github.com/user-attachments/assets/54a4f9c1-e7f4-491e-8baa-6fe10f240887" />This Python script gives a colour-coded matrix of good and bad times next week to go out kayaking, stand up paddleboarding or sailing. Hours are colour-coded for too much or too little wind, waves, tide and rain. </html>
+<html> <img width="120" height="152/" alt="Screenshot" align="left" src="https://github.com/user-attachments/assets/54a4f9c1-e7f4-491e-8baa-6fe10f240887" href="https://syv-fran.github.io/watersports-weather/" />This Python script gives a colour-coded matrix of good and bad times next week to go out kayaking, stand up paddleboarding or sailing. Hours are colour-coded for too much or too little wind, waves, tide and rain. </html>
 
-## [Live Demo Here](https://syv-fran.github.io/watersports-weather/): current weather, fixed locations and rules.
+## [Live Demo Here](https://syv-fran.github.io/watersports-weather/): 
+(current weather, fixed locations and rules.)
 ### Features
 - Interactive, responsive HTML. Run the script to get an up-to-date forecast when you can, and then interact with the graphs offline when you are out on the water.
 - Unlimited locations, with adjustable limits of what conditions are RED, AMBER or GREEN for you.

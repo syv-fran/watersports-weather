@@ -1,6 +1,6 @@
 ### Configuration
 
-``weather.json`` should be a list of sites, enclosed by curly braces in standard JSON format.
+The config file (defaulting to `weather.json`) should be a list of sites, enclosed by curly braces in standard JSON format. The repository contains two examples, `weather.json` and `example-single.json`.
 
 #### Basics
 
@@ -15,18 +15,18 @@ Each site should have a label, name and location specified as \[latitude,longitu
     }
 The label ``kayaking1`` can be used on the command line to select a single site (the default is to display all sites with locations), and should be unique.
 
-Rules should be listed for each site by severity colour (red or amber) followed by whether it is triggered above (>=) value or below (<) value in the given #Units. 
+Rules should be listed for each site by severity colour (red or amber) followed by whether it is triggered above (>=) or below (<) the value in the given [units](#Units). 
 For example, add this after the location for a beginner stand up paddler who doesn't like the rain, or wading through mud at low tide:
 
         "red": {
             "above": {
-                "Wind": 15.0,
-                "Waves": 0.3
+                "Wind": 12.0,
+                "Waves": 0.2
              }
             }
         "amber": {
             "above": {
-                "Rain": 0.0,
+                "Rain": 0.0
             },
             "below": {
                 Tide: - 0.4
@@ -45,7 +45,7 @@ There is only room for two emojis at once on the graph. More will be marked with
 #### Constraints
 
 Current constraints are Wind, Wave, Rain and Tide. 
-Future work:  Hourly Temperature?
+
 
 #### Sheltered bays and wave heights
 
@@ -64,7 +64,7 @@ sum of squares.
 
 For inland locations, set ``sheltered_angles": [360,0]`` . Sea temperature and swell heights will usually be unavailable.
 
-#### Units
+#### Units {#units}
 
 - Waves: m 
 - Rain: mm 
@@ -76,7 +76,7 @@ Future work: Accommodate preferred units?
 
 #### Global Defaults
 
-A configuration file entry called ``global``, if present, helps to make the config file more concise for multiple sites. Its contents are defaults, overridden by constraints elsewhere.
+A configuration file entry called `global`, if present, helps to make the config file more concise for multiple sites. Its contents are defaults, overridden by constraints elsewhere.
 
     "global": {
         "red": {
@@ -88,7 +88,8 @@ A configuration file entry called ``global``, if present, helps to make the conf
 
 #### Time and date considerations
 
-- In most situations, you do not need to specify the timezone, but you may do so: `` "timezone": "Europe/Madrid", ...``
+- In most situations, you do not need to specify the timezone, but you may do so:
+ `` "timezone": "Europe/Madrid", ...``
 
 - Hours displayed are 8am-8pm, greyed out between sunset and sunrise.
 

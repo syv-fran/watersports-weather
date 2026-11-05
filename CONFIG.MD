@@ -11,13 +11,14 @@ Each site should have a label, name and location specified as \[latitude,longitu
             "location": [
                 36.2,
                 -6.0
-            ],
+            ]
     }
 The label ``kayaking1`` can be used on the command line to select a single site (the default is to display all sites with locations), and should be unique.
 
 Rules should be listed for each site by severity colour (red or amber) followed by whether it is triggered above (>=) or below (<) the value in the given [units](#Units). 
-For example, add this after the location for a beginner stand up paddler who doesn't like the rain, or wading through mud at low tide:
-
+For example, add this after the location  for a beginner stand up paddler who doesn't like the rain, or wading through mud at low tide:
+   
+        ,
         "red": {
             "above": {
                 "Wind": 12.0,
@@ -64,15 +65,13 @@ sum of squares.
 
 For inland locations, set ``sheltered_angles": [360,0]`` . Sea temperature and swell heights will usually be unavailable.
 
-#### Units {#units}
+#### Units 
 
 - Waves: m 
 - Rain: mm 
 - Wind: km/h
 - Tide: m  
 - Temperature: Celsius
-
-Future work: Accommodate preferred units?
 
 #### Global Defaults
 
@@ -81,7 +80,7 @@ A configuration file entry called `global`, if present, helps to make the config
     "global": {
         "red": {
             "above": {
-                "Waves": 1
+                "Waves": 2
              }
         }
     }
